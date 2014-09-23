@@ -1,0 +1,7 @@
+<plugin name='arrested' version='1.33' grailsVersion='2.0 &gt; *'>
+  <title>Arrested Plugin</title>
+  <description>Generates RESTful controllers for domain classes and maps them in UrlMappings, generates single-page AngularJS-based views, and provides simple token-based security</description>
+  <documentation>http://grails.org/plugin/arrested</documentation>
+  <type>ArrestedGrailsPlugin</type>
+  <resources />
+</plugin>

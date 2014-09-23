@@ -1,0 +1,45 @@
+<% import grails.persistence.Event %>
+<div data-ng-controller="${className}Ctrl" >
+    <h1>${className} List</h1>
+ 	<div data-ng-show="errors.showErrors" class="red">
+		<div ng-repeat="error in errors.errorMessages">
+			<strong></strong> <span ng-bind="error"></span>
+		</div>
+	</div>
+	   
+	
+        <div>
+            <p></p>
+             <a class="btn btn-primary btn-primary" data-ng-click="new${className}()"><span class="glyphicon glyphicon-plus"></span><g:message code="default.new.label" args="['${domainTitle}']" default="New ${domainTitle}"/></a>
+            <p></p>
+        </div>
+        <div>
+            <div>
+                <div>
+                    <%  excludedProps = Event.allEvents.toList() << 'id' << 'version'
+                    allowedNames = domainClass.name << 'dateCreated' << 'lastUpdated'
+                    props = domainClass.findAll { allowedNames.contains(it.name) && !excludedProps.contains(it.name) && it.type != null && !Collection.isAssignableFrom(it.type) }
+                    %>
+					<button ng-click="tableParams.reload()" class="btn btn-default">Reload</button>
+    				<button ng-click="tableParams.sorting({})" class="btn btn-default">Clear sorting</button> 
+					<div loading-container="tableParams.settings().\$loading">
+                    <table class="table"  ng-table="tableParams" show-filter="true">
+                        <tr  data-ng-repeat="instance in ${domainInstance}s"  data-ng-click="edit${className}(instance)">
+                            <%  props.eachWithIndex { p,index -> %>
+                            	<% if (index==0) { %>
+                             		<td data-sortable="'${p.name}'" filter="{'${p.name}':'text'}"  data-title="'${p.name}'"  >
+                            	<%  }else{ %>
+                            		<td data-sortable="'${p.name}'"  data-title="'${p.name}'"  >
+                            	<%  } %>
+                            	{{instance.${p.name}}}
+                            </td>
+                            <%  } %>
+                        </tr>
+                    </table>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
